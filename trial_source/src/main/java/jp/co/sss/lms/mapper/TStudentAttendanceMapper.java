@@ -64,21 +64,18 @@ public interface TStudentAttendanceMapper {
 	 * @return 更新結果
 	 */
 	Boolean update(TStudentAttendance tStudentAttendance);
-	
-	// jp.co.sss.lms.mapper.TStudentAttendanceMapper.java
 
 	    /**
-	     * 過去日（入力パラメータの日付より前）の未入力勤怠レコード数を取得する
+	     * 過去日（入力パラメータの日付より前）の未入力勤怠レコード数を取得
 	     * @param lmsUserId ユーザーID
 	     * @param deleteFlg 削除フラグ
 	     * @param trainingDate 比較対象の日付
 	     * @return 未入力レコード数
 	     */
 	    public Integer countMissingAttendanceForPastDays(
-	        // Service層の (Integer, short, Date) に型を合わせる
 	        @Param("lmsUserId") Integer lmsUserId,
 	        @Param("deleteFlg") short deleteFlg,
-	        @Param("trainingDate") java.util.Date trainingDate // または java.sql.Date
+	        @Param("trainingDate") java.util.Date trainingDate 
 	    );
 	
 }

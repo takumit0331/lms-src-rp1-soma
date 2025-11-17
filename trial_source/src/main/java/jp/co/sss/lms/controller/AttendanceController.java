@@ -47,6 +47,11 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+	
+		boolean hasMissingAttendance = studentAttendanceService .hasMissingAttendanceForPastDays(attendanceManagementDtoList);
+	    // 結果をViewに渡す
+	    model.addAttribute("hasMissingAttendance", hasMissingAttendance);
+		
 		return "attendance/detail";
 	}
 
@@ -72,6 +77,10 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+		
+		boolean hasMissingAttendance = studentAttendanceService.hasMissingAttendanceForPastDays(attendanceManagementDtoList);
+		model.addAttribute("hasMissingAttendance", hasMissingAttendance);
+		
 		return "attendance/detail";
 	}
 
@@ -97,6 +106,10 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+		
+		boolean hasMissingAttendance = studentAttendanceService.hasMissingAttendanceForPastDays(attendanceManagementDtoList);
+		model.addAttribute("hasMissingAttendance", hasMissingAttendance);
+		
 		return "attendance/detail";
 	}
 
@@ -113,11 +126,11 @@ public class AttendanceController {
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		// 勤怠フォームの生成
-		AttendanceForm attendanceForm = studentAttendanceService
-				.setAttendanceForm(attendanceManagementDtoList);
+		AttendanceForm attendanceForm = studentAttendanceService.setAttendanceForm(attendanceManagementDtoList);
 		model.addAttribute("attendanceForm", attendanceForm);
 
 		return "attendance/update";
+		
 	}
 
 	/**
@@ -136,9 +149,9 @@ public class AttendanceController {
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);
 		model.addAttribute("message", message);
+		
 		// 一覧の再取得
-		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
-				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
+		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
 		return "attendance/detail";

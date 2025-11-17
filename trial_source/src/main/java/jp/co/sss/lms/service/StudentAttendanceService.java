@@ -1,6 +1,7 @@
 package jp.co.sss.lms.service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -333,5 +334,46 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
+	/**
+	 * 勤怠管理DTOリストから、過去日（本日より前）の勤怠に未入力があるかチェックする
+	 * @param attendanceManagementDtoList 勤怠管理画面用DTOリスト
+	 * @return 未入力勤怠があれば true、なければ false
+	 */
+	public boolean hasMissingAttendanceForPastDays(
+			List<AttendanceManagementDto> attendanceManagementDtoList) {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateForComparison;
+		
+		try {
+			// 本日 00:00:00.000 の日付オブジェクトを作成
+			dateForComparison = sdf.parse(sdf.format(new Date())); 
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false; 
+		}
+
+		// 未入力の件数を保持する変数
+		int missingCount = 0; 
+
+		// 2. リストを走査して未入力勤怠をチェック
+		for (AttendanceManagementDto dto : attendanceManagementDtoList) {
+			// 過去日チェック
+			if (dto.getTrainingDate() != null && dto.getTrainingDate().before(dateForComparison)) {
+				
+				// 未入力チェック
+				String startTime = dto.getTrainingStartTime();
+				String endTime = dto.getTrainingEndTime();
+
+				boolean isMissing = (startTime == null || startTime.isEmpty() || 
+				                     endTime == null || endTime.isEmpty());
+
+				if (isMissing) {
+				
+					missingCount++; 
+				}
+			}
+		}
+		return missingCount > 0;
+	}
 }

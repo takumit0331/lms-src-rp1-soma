@@ -73,7 +73,20 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript" th:src="@{/js/jquery.2.1.1.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script> 
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script> 
+
+<script type="text/javascript" th:src="@{/js/bootstrap-datepicker.min.js}"></script> 
+
+<script type="text/javascript" th:src="@{/js/lms_common.js}"></script> 
+
+<div id="attendance-page-data" th:data-missing-flag="${hasMissingAttendance}"></div>
+<script type="text/javascript" th:src="@{/js/studentAttendance.js}"></script>
+
+	<script type="text/javascript">
 		$(function() {
 			$("#now").text('現在の時刻は　' + getClock() + '　です。');
 			setInterval(function() {
@@ -87,6 +100,6 @@
 			return hours + ':' + minutes;
 		}
 	</script>
-
+	
 </body>
 </html>

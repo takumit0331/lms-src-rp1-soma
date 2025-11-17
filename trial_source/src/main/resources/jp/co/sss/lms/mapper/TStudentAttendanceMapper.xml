@@ -92,22 +92,14 @@
     FROM
       t_student_attendance
     WHERE
-      -- 抽出条件 No.1: LMSユーザID
       lms_user_id = #{lmsUserId}
-      
-      -- 抽出条件 No.2: 削除フラグ
       AND delete_flg = #{deleteFlg}
-      
-      -- 抽出条件 No.3: 過去日（入力パラメータの日付より前）
       AND training_date &lt; #{trainingDate}
-      
-      -- 抽出条件 No.4: 動態状態=1 (火席ステータスは除外)
-      AND status = 1 
-      
-      -- 抽出条件 No.5: 勤怠が未入力である条件
       AND (
         training_start_time IS NULL OR training_end_time IS NULL
       )
 </select>
+  
+  
   
 </mapper>
