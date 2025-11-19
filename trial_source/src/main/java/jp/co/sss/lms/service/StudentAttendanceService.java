@@ -334,9 +334,13 @@ public class StudentAttendanceService {
 		// 完了メッセージ
 		return messageUtil.getMessage(Constants.PROP_KEY_ATTENDANCE_UPDATE_NOTICE);
 	}
+	
+	//相馬拓海 – Task.25 
+	
 	/**
 	 * 勤怠管理DTOリストから、過去日（本日より前）の勤怠に未入力があるかチェックする
 	 * @param attendanceManagementDtoList 勤怠管理画面用DTOリスト
+	 * @@author 相馬拓海-Task25
 	 * @return 未入力勤怠があれば true、なければ false
 	 */
 	public boolean hasMissingAttendanceForPastDays(

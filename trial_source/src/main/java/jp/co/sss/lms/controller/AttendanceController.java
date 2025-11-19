@@ -30,12 +30,15 @@ public class AttendanceController {
 	@Autowired
 	private LoginUserDto loginUserDto;
 
+	//相馬拓海 – Task.25 
+	
 	/**
 	 * 勤怠管理画面 初期表示
 	 * 
 	 * @param lmsUserId
 	 * @param courseId
 	 * @param model
+	 * @@author 相馬拓海-Task25
 	 * @return 勤怠管理画面
 	 * @throws ParseException
 	 */
@@ -55,11 +58,14 @@ public class AttendanceController {
 		return "attendance/detail";
 	}
 
+	//相馬拓海 – Task.25 
+	
 	/**
 	 * 勤怠管理画面 『出勤』ボタン押下
 	 * 
 	 * @param model
 	 * @return 勤怠管理画面
+	 * @@author 相馬拓海-Task25
 	 */
 	@RequestMapping(path = "/detail", params = "punchIn", method = RequestMethod.POST)
 	public String punchIn(Model model) {
@@ -84,11 +90,14 @@ public class AttendanceController {
 		return "attendance/detail";
 	}
 
+	//相馬拓海 – Task.25 
+	
 	/**
 	 * 勤怠管理画面 『退勤』ボタン押下
 	 * 
 	 * @param model
 	 * @return 勤怠管理画面
+	 * @@author 相馬拓海-Task25
 	 */
 	@RequestMapping(path = "/detail", params = "punchOut", method = RequestMethod.POST)
 	public String punchOut(Model model) {

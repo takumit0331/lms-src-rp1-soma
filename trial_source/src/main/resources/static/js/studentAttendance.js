@@ -1,4 +1,4 @@
-
+//相馬拓海 – Task.25 
 // jQueryのreadyイベントで実行
 $(function() {
     const dataElement = $('#attendance-page-data');
