@@ -87,7 +87,7 @@
 	</update>
 	
 <!-- 相馬拓海 – Task.25 -->
-	<select id="countMissingAttendanceForPastDays" resultType="java.lang.Integer">
+<select id="notEnterCount" resultType="java.lang.Integer">
     SELECT
       COUNT(*)
     FROM
@@ -96,11 +96,14 @@
       lms_user_id = #{lmsUserId}
       AND delete_flg = #{deleteFlg}
       AND training_date &lt; #{trainingDate}
+      AND status &lt;&gt; 1            
       AND (
-        training_start_time IS NULL OR training_end_time IS NULL
+        training_start_time IS NULL
+        OR training_end_time IS NULL
+        OR training_start_time = ''
+        OR training_end_time = ''
       )
 </select>
-  
   
   
 </mapper>

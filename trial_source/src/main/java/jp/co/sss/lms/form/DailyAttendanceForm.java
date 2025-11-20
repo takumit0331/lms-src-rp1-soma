@@ -20,6 +20,15 @@ public class DailyAttendanceForm {
 	private String trainingStartTime;
 	/** 退勤時間 */
 	private String trainingEndTime;
+	
+	// 開始時刻の分割フィールド
+    private String trainingStartHour;   // 相馬拓海 – Task.26 
+    private String trainingStartMinute; // 相馬拓海 – Task.26 
+
+    // 終了時刻の分割フィールド
+    private String trainingEndHour;     // 相馬拓海 – Task.26 
+    private String trainingEndMinute;   // 相馬拓海 – Task.26 
+    
 	/** 中抜け時間 */
 	private Integer blankTime;
 	/** 中抜け時間（画面表示用） */

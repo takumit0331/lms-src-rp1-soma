@@ -30,7 +30,7 @@ public class AttendanceController {
 	@Autowired
 	private LoginUserDto loginUserDto;
 
-	//相馬拓海 – Task.25 
+	
 	
 	/**
 	 * 勤怠管理画面 初期表示
@@ -38,7 +38,6 @@ public class AttendanceController {
 	 * @param lmsUserId
 	 * @param courseId
 	 * @param model
-	 * @@author 相馬拓海-Task25
 	 * @return 勤怠管理画面
 	 * @throws ParseException
 	 */
@@ -50,22 +49,22 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
-	
-		boolean hasMissingAttendance = studentAttendanceService .hasMissingAttendanceForPastDays(attendanceManagementDtoList);
-	    // 結果をViewに渡す
+		//相馬拓海 – Task.25 
+		boolean hasMissingAttendance = studentAttendanceService.hasMissingAttendanceForPastDays(
+	            loginUserDto.getLmsUserId() 
+	        );
+		// 結果をViewに渡す
 	    model.addAttribute("hasMissingAttendance", hasMissingAttendance);
 		
 		return "attendance/detail";
 	}
 
-	//相馬拓海 – Task.25 
 	
 	/**
 	 * 勤怠管理画面 『出勤』ボタン押下
 	 * 
 	 * @param model
 	 * @return 勤怠管理画面
-	 * @@author 相馬拓海-Task25
 	 */
 	@RequestMapping(path = "/detail", params = "punchIn", method = RequestMethod.POST)
 	public String punchIn(Model model) {
@@ -82,22 +81,15 @@ public class AttendanceController {
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
-
-		
-		boolean hasMissingAttendance = studentAttendanceService.hasMissingAttendanceForPastDays(attendanceManagementDtoList);
-		model.addAttribute("hasMissingAttendance", hasMissingAttendance);
 		
 		return "attendance/detail";
 	}
-
-	//相馬拓海 – Task.25 
 	
 	/**
 	 * 勤怠管理画面 『退勤』ボタン押下
 	 * 
 	 * @param model
 	 * @return 勤怠管理画面
-	 * @@author 相馬拓海-Task25
 	 */
 	@RequestMapping(path = "/detail", params = "punchOut", method = RequestMethod.POST)
 	public String punchOut(Model model) {
@@ -115,10 +107,6 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
-		
-		boolean hasMissingAttendance = studentAttendanceService.hasMissingAttendanceForPastDays(attendanceManagementDtoList);
-		model.addAttribute("hasMissingAttendance", hasMissingAttendance);
-		
 		return "attendance/detail";
 	}
 
@@ -134,8 +122,9 @@ public class AttendanceController {
 		// 勤怠管理リストの取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
-		// 勤怠フォームの生成
+		// 勤怠フォームの生成(この中でプルダウン用マップ生成と時・分への分割処理を実行)
 		AttendanceForm attendanceForm = studentAttendanceService.setAttendanceForm(attendanceManagementDtoList);
+		
 		model.addAttribute("attendanceForm", attendanceForm);
 
 		return "attendance/update";

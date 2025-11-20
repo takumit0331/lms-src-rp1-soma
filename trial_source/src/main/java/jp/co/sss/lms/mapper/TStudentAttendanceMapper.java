@@ -68,17 +68,16 @@ public interface TStudentAttendanceMapper {
 	     
 	
 	
-	    //相馬拓海 – Task.25 
 	
 	    /**
 	     * 過去日（入力パラメータの日付より前）の未入力勤怠レコード数を取得
+	     * @author 相馬拓海-Task25
 	     * @param lmsUserId ユーザーID
 	     * @param deleteFlg 削除フラグ
 	     * @param trainingDate 比較対象の日付
-	     @@author 相馬拓海-Task25
 	     * @return 未入力レコード数
 	     */
-	    public Integer countMissingAttendanceForPastDays(
+	    public Integer notEnterCount(
 	        @Param("lmsUserId") Integer lmsUserId,
 	        @Param("deleteFlg") short deleteFlg,
 	        @Param("trainingDate") java.util.Date trainingDate 
