@@ -245,6 +245,29 @@ public class StudentAttendanceService {
 				dailyAttendanceForm.setBlankTimeValue(String.valueOf(
 						attendanceUtil.calcBlankTime(attendanceManagementDto.getBlankTime())));
 			}
+			//Task25-相馬
+			// 開始時刻の分割フィールド作成
+			if (dailyAttendanceForm.getTrainingStartTime() != null && dailyAttendanceForm.getTrainingStartTime().contains(":")) {
+			    String[] startParts = dailyAttendanceForm.getTrainingStartTime().split(":");
+			    dailyAttendanceForm.setTrainingStartHour(startParts[0]);   // "HH"
+			    dailyAttendanceForm.setTrainingStartMinute(startParts[1]); // "mm"
+			}
+
+			// 終了時刻の分割フィールド作成
+			if (dailyAttendanceForm.getTrainingEndTime() != null && dailyAttendanceForm.getTrainingEndTime().contains(":")) {
+			    String[] endParts = dailyAttendanceForm.getTrainingEndTime().split(":");
+			    dailyAttendanceForm.setTrainingEndHour(endParts[0]);   // "HH"
+			    dailyAttendanceForm.setTrainingEndMinute(endParts[1]); // "mm"
+			}
+			System.out.println(String.format(
+				    "開始: %s:%s, 終了: %s:%s",
+				    dailyAttendanceForm.getTrainingStartHour(),
+				    dailyAttendanceForm.getTrainingStartMinute(),
+				    dailyAttendanceForm.getTrainingEndHour(),
+				    dailyAttendanceForm.getTrainingEndMinute()
+				));
+
+			//Task25
 			dailyAttendanceForm.setStatus(String.valueOf(attendanceManagementDto.getStatus()));
 			dailyAttendanceForm.setNote(attendanceManagementDto.getNote());
 			dailyAttendanceForm.setSectionName(attendanceManagementDto.getSectionName());
@@ -324,7 +347,7 @@ public class StudentAttendanceService {
 //			TrainingTime trainingEndTime = null;
 //			trainingEndTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
 //			tStudentAttendance.setTrainingEndTime(trainingEndTime.getFormattedString());
-			
+//			
 			// 中抜け時間
 			tStudentAttendance.setBlankTime(dailyAttendanceForm.getBlankTime());
 			// 遅刻早退ステータス
@@ -373,12 +396,12 @@ public class StudentAttendanceService {
 	
 	/**
 	 * 、過去日（本日より前）の勤怠に未入力があるかチェックする
-	 * @param attendanceManagementDtoList 勤怠管理画面用DTOリスト
 	 * @@author 相馬拓海-Task25
+	 * @param attendanceManagementDtoList 勤怠管理画面用DTOリスト
 	 * @return 未入力勤怠があれば true、なければ false
 	 */
 	
-	public boolean hasMissingAttendanceForPastDays(Integer lmsUserIdStr) {
+	public boolean hasMissingAttendanceForPastDays(Integer lmsUserId) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateForComparison;
@@ -390,7 +413,7 @@ public class StudentAttendanceService {
 			e.printStackTrace();
 			return false; 
 		}
-		Integer lmsUserId = lmsUserIdStr;
+		//Integer lmsUserId = lmsUserId;
 	    short deleteFlg = 0;
 	    
 		int missingCount = tStudentAttendanceMapper.notEnterCount(

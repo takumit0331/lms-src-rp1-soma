@@ -96,14 +96,13 @@
       lms_user_id = #{lmsUserId}
       AND delete_flg = #{deleteFlg}
       AND training_date &lt; #{trainingDate}
-      AND status &lt;&gt; 1            
+      AND status != 1            
       AND (
-        training_start_time IS NULL
-        OR training_end_time IS NULL
-        OR training_start_time = ''
+       training_start_time = ''
         OR training_end_time = ''
+        OR training_start_time IS NULL
+        OR training_end_time IS NULL
       )
 </select>
-  
   
 </mapper>
