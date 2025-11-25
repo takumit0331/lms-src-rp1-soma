@@ -63,22 +63,29 @@
 											<select th:name="|attendanceList[${stat.index}].trainingStartHour|"
 												class="form-control"
 												style="height:40px;flex:0 0 60px; width:auto !important;">
-												<option th:each="h : ${hourList}" th:value="${h}" th:text="${h}"
-													th:selected="${h == dailyAttendanceForm.trainingStartHour}">
+												<!-- 空の選択肢 -->
+												<option th:if="${dailyAttendanceForm.trainingStartHour == null}"
+													value="" selected></option>
+												<option th:each="h : ${#numbers.sequence(0,23)}" th:value="${h}"
+													th:text="${T(java.lang.String).format('%02d', h)}"
+													th:selected="${h} == ${dailyAttendanceForm.trainingStartHour}">
 												</option>
 											</select>
-
+											<!-- コロン -->
+											<span style="font-size:18px; font-weight:bold; line-height:40px;">:</span>
 											<!-- 分 -->
 											<select th:name="|attendanceList[${stat.index}].trainingStartMinute|"
 												class="form-control"
 												style="height:40px;flex:0 0 60px; width:auto !important;">
-												<option th:each="m : ${minuteList}" th:value="${m}" th:text="${m}"
-													th:selected="${m == dailyAttendanceForm.trainingStartMinute}">
+												<option th:if="${dailyAttendanceForm.trainingStartMinute == null}"
+													value="" selected></option>
+												<option th:each="m : ${#numbers.sequence(0,59)}" th:value="${m}"
+													th:text="${T(java.lang.String).format('%02d', m)}"
+													th:selected="${m} == ${dailyAttendanceForm.trainingStartMinute}">
 												</option>
 											</select>
 										</div>
 									</td>
-
 									<!-- 終了時刻 -->
 									<td class="w70">
 										<div style="display:flex; gap:4px;">
@@ -86,30 +93,42 @@
 											<select th:name="|attendanceList[${stat.index}].trainingEndHour|"
 												class="form-control"
 												style="height:40px;flex:0 0 60px; width:auto !important;">
-												<option th:each="h : ${hourList}" th:value="${h}" th:text="${h}"
-													th:selected="${h == dailyAttendanceForm.trainingEndHour}">
+												<option th:if="${dailyAttendanceForm.trainingEndHour == null}" value=""
+													selected></option>
+												<option th:each="h : ${#numbers.sequence(0,23)}" th:value="${h}"
+													th:text="${T(java.lang.String).format('%02d', h)}"
+													th:selected="${h} == ${dailyAttendanceForm.trainingEndHour}">
 												</option>
 											</select>
-
+											<!-- コロン -->
+											<span style="font-size:18px; font-weight:bold; line-height:40px;">:</span>
 											<!-- 分 -->
 											<select th:name="|attendanceList[${stat.index}].trainingEndMinute|"
 												class="form-control"
 												style="height:40px;flex:0 0 60px; width:auto !important;">
-												<option th:each="m : ${minuteList}" th:value="${m}" th:text="${m}"
-													th:selected="${m == dailyAttendanceForm.trainingEndMinute}">
+												<option th:if="${dailyAttendanceForm.trainingEndMinute == null}"
+													value="" selected></option>
+												<option th:each="m : ${#numbers.sequence(0,59)}" th:value="${m}"
+													th:text="${T(java.lang.String).format('%02d', m)}"
+													th:selected="${m} == ${dailyAttendanceForm.trainingEndMinute}">
 												</option>
 											</select>
 										</div>
 									</td>
 									<td class="w80">
-										<select th:name="|attendanceList[${stat.index}].blankTime|" class="form-control">
-											<option th:each="blankTime : ${attendanceForm.blankTimes}" th:value="${blankTime.key}" th:inlne="text" class="form-control" 
-												th:selected="${blankTime.key == dailyAttendanceForm.blankTime}">[[${blankTime.value}]]</option>
+										<select th:name="|attendanceList[${stat.index}].blankTime|"
+											class="form-control">
+											<option th:each="blankTime : ${attendanceForm.blankTimes}"
+												th:value="${blankTime.key}" th:inlne="text" class="form-control"
+												th:selected="${blankTime.key == dailyAttendanceForm.blankTime}">
+												[[${blankTime.value}]]</option>
 										</select>
-									</td> 
+									</td>
 									<td class="w70">[[${dailyAttendanceForm.statusDispName}]]</td>
-									
+
 									<td class="w240">
+										<input type="text" th:name="|attendanceList[${stat.index}].note|"
+											th:value="${dailyAttendanceForm.note}" class="form-control"></input>
 									</td>
 								</tr>
 							</th:block>

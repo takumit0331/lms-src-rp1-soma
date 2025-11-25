@@ -245,7 +245,7 @@ public class StudentAttendanceService {
 				dailyAttendanceForm.setBlankTimeValue(String.valueOf(
 						attendanceUtil.calcBlankTime(attendanceManagementDto.getBlankTime())));
 			}
-			//Task25-相馬
+			//Task26-相馬
 			// 開始時刻の分割フィールド作成
 			if (dailyAttendanceForm.getTrainingStartTime() != null && dailyAttendanceForm.getTrainingStartTime().contains(":")) {
 			    String[] startParts = dailyAttendanceForm.getTrainingStartTime().split(":");
@@ -259,21 +259,12 @@ public class StudentAttendanceService {
 			    dailyAttendanceForm.setTrainingEndHour(endParts[0]);   // "HH"
 			    dailyAttendanceForm.setTrainingEndMinute(endParts[1]); // "mm"
 			}
-			System.out.println(String.format(
-				    "開始: %s:%s, 終了: %s:%s",
-				    dailyAttendanceForm.getTrainingStartHour(),
-				    dailyAttendanceForm.getTrainingStartMinute(),
-				    dailyAttendanceForm.getTrainingEndHour(),
-				    dailyAttendanceForm.getTrainingEndMinute()
-				));
-
 			//Task25
 			dailyAttendanceForm.setStatus(String.valueOf(attendanceManagementDto.getStatus()));
 			dailyAttendanceForm.setNote(attendanceManagementDto.getNote());
 			dailyAttendanceForm.setSectionName(attendanceManagementDto.getSectionName());
 			dailyAttendanceForm.setIsToday(attendanceManagementDto.getIsToday());
-			dailyAttendanceForm.setDispTrainingDate(dateUtil
-					.dateToString(attendanceManagementDto.getTrainingDate(), "yyyy年M月d日(E)"));
+			dailyAttendanceForm.setDispTrainingDate(dateUtil.dateToString(attendanceManagementDto.getTrainingDate(), "yyyy年M月d日(E)"));
 			dailyAttendanceForm.setStatusDispName(attendanceManagementDto.getStatusDispName());
 
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
@@ -320,7 +311,8 @@ public class StudentAttendanceService {
 			}
 			
 			// -----------------------------------------------------------
-	        // 出勤時刻整形 (プルダウン値の結合)
+	        // 出勤時刻整形 
+			// Task26-相馬拓海-
 	        // -----------------------------------------------------------
 	        TrainingTime trainingStartTime = createTrainingTime(
 	            dailyAttendanceForm.getTrainingStartHour(), 
@@ -329,7 +321,8 @@ public class StudentAttendanceService {
 	        tStudentAttendance.setTrainingStartTime(trainingStartTime != null ? trainingStartTime.getFormattedString() : null);
 
 	        // -----------------------------------------------------------
-	        // 退勤時刻整形 (プルダウン値の結合)
+	        // 退勤時刻整形 
+	        // Task26-相馬拓海-
 	        // -----------------------------------------------------------
 	        TrainingTime trainingEndTime = createTrainingTime(
 	            dailyAttendanceForm.getTrainingEndHour(), 
@@ -339,15 +332,6 @@ public class StudentAttendanceService {
 			
 			tStudentAttendance.setLmsUserId(lmsUserId);
 			tStudentAttendance.setAccountId(loginUserDto.getAccountId());
-//			// 出勤時刻整形
-//			TrainingTime trainingStartTime = null;
-//			trainingStartTime = new TrainingTime(dailyAttendanceForm.getTrainingStartTime());
-//			tStudentAttendance.setTrainingStartTime(trainingStartTime.getFormattedString());
-//			// 退勤時刻整形
-//			TrainingTime trainingEndTime = null;
-//			trainingEndTime = new TrainingTime(dailyAttendanceForm.getTrainingEndTime());
-//			tStudentAttendance.setTrainingEndTime(trainingEndTime.getFormattedString());
-//			
 			// 中抜け時間
 			tStudentAttendance.setBlankTime(dailyAttendanceForm.getBlankTime());
 			// 遅刻早退ステータス
