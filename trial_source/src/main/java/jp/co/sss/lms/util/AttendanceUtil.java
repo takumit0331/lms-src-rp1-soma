@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.sss.lms.enums.AttendanceStatusEnum;
+import jp.co.sss.lms.form.DailyAttendanceForm;
 import jp.co.sss.lms.mapper.MSectionMapper;
 
 /**
@@ -146,5 +147,37 @@ public class AttendanceUtil {
 		}
 		return false;
 	}
+	/**
+     * 時刻文字列を「時」と「分」に分割し、DailyAttendanceFormに設定する。
+     * @param timeString 分割対象の時刻文字列 (例: "09:30")
+     * @@author 相馬拓海-Task2６
+     * @param form 設定対象の DailyAttendanceForm
+     * @param isStart 開始時刻か終了時刻かを示すフラグ (true: 開始時刻, false: 終了時刻)
+     */
+    public void splitAndSetTime(String timeString, DailyAttendanceForm form, boolean isStart) {
+        // null または ":" を含まない場合は処理しない
+        if (timeString == null || !timeString.contains(":")) {
+            return;
+        }
+
+        String[] parts = timeString.split(":");
+        if (parts.length != 2) {
+            // フォーマットが不正な場合はログ出力などのエラー処理を入れる
+            return; 
+        }
+
+        String hour = parts[0];
+        String minute = parts[1];
+
+        if (isStart) {
+            // 開始時刻の設定
+            form.setTrainingStartHour(hour);
+            form.setTrainingStartMinute(minute);
+        } else {
+            // 終了時刻の設定
+            form.setTrainingEndHour(hour);
+            form.setTrainingEndMinute(minute);
+        }
+    }
 
 }
